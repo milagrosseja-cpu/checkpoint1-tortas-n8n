@@ -65,12 +65,17 @@
     {
       "parameters": {
         "descriptionType": "manual",
-        "toolDescription": "Esta herramienta consulta una planilla de Google Sheets que funciona como registro (aún de prueba) de las solicitudes de torta realizadas por miembros de equipo dentro del beneficio corporativo de tortas. La planilla contiene, por cada solicitud registrada, el número de documento (DNI) de quien la realizó, la fecha para la cual fue solicitada, la variedad de torta elegida y el estado de la solicitud (por ejemplo, Confirmada).\n\nFINALIDAD DE NEGOCIO: usá esta herramienta únicamente quando necesites verificar información real y ya registrada sobre solicitudes de tortas, y no para responder preguntas generales que no requieren datos de la planilla.\n\nCUÁNDO SÍ DEBÉS USARLA (ejemplos de intención):\n- La persona solicitante pregunta si ya tiene una torta solicitada o reservada.\n- La persona solicitante pregunta qué torta tiene reservada o para qué fecha.\n- La persona solicitante pregunta si tiene alguna solicitud registrada o pendiente.\n- Necesitás confirmar el estado de una solicitud existente antes de responder algo relacionado con ella.\n\nCUÁNDO NO DEBÉS USARLA:\n- Cuando la consulta es general y no requiere datos personales de la planilla, por ejemplo \"¿qué variedades de torta hay?\" o \"¿cómo funciona el beneficio?\". Esas preguntas se responden con el contexto que ya tenés, sin consultar la herramienta.\n- Cuando todavía no contás con el número de documento (DNI) de la persona solicitante. En ese caso, primero pedí el DNI; recién después, si corresponde, consultá la herramienta.\n- Cuando la persona solicitante todavía no formuló ninguna pregunta relacionada con una solicitud existente.\n\nINFORMACIÓN QUE NECESITÁS ANTES DE EJECUTARLA:\n- El número de documento (DNI) de la persona solicitante, proporcionado explícitamente por ella en la conversación. Nunca lo inventes ni lo asumas.\n\nCÓMO INTERPRETAR LOS RESULTADOS:\n- Si la herramienta devuelve una o más filas asociadas al DNI consultado, informá a la persona solicitante la información encontrada (fecha, variedad y estado) de forma clara, usando solamente lo que la herramienta devolvió.\n- Si la herramienta no devuelve ninguna fila para ese DNI, informá que no se encontró ninguna solicitud registrada a su nombre; no asumas que existe una solicitud igualmente.\n- Si el resultado es ambiguo (por ejemplo, múltiples filas con datos contradictorios, o datos incompletos), comunicá la ambigüedad a la persona solicitante en lugar de elegir arbitrariamente una respuesta, y sugerí que el caso sea revisado por Recursos Humanos si no podés resolverlo con claridad.\n- Si la herramienta devuelve un error o no puede ejecutarse correctamente, no inventes un resultado: informá que no fue posible verificar la información en este momento y que el caso debe ser derivado a Recursos Humanos.\n\nEsta herramienta es de solo lectura en este checkpoint: se utiliza para consultar información existente, no para crear ni modificar solicitudes.",
+        "toolDescription": "Esta herramienta consulta una planilla de Google Sheets que funciona como registro (aún de prueba) de las solicitudes de torta realizadas por miembros de equipo dentro del beneficio corporativo de tortas. La planilla contiene, por cada solicitud registrada, el número de documento (DNI) de quien la realizó, la fecha para la cual fue solicitada, la variedad de torta elegida y el estado de la solicitud (por ejemplo, Confirmada).\n\nFINALIDAD DE NEGOCIO: usá esta herramienta únicamente cuando necesites verificar información real y ya registrada sobre solicitudes de tortas, y no para responder preguntas generales que no requieren datos de la planilla.\n\nCUÁNDO SÍ DEBÉS USARLA (ejemplos de intención):\n- La persona solicitante pregunta si ya tiene una torta solicitada o reservada.\n- La persona solicitante pregunta qué torta tiene reservada o para qué fecha.\n- La persona solicitante pregunta si tiene alguna solicitud registrada o pendiente.\n- Necesitás confirmar el estado de una solicitud existente antes de responder algo relacionado con ella.\n\nCUÁNDO NO DEBÉS USARLA:\n- Cuando la consulta es general y no requiere datos personales de la planilla, por ejemplo \"¿qué variedades de torta hay?\" o \"¿cómo funciona el beneficio?\". Esas preguntas se responden con el contexto que ya tenés, sin consultar la herramienta.\n- Cuando todavía no contás con el número de documento (DNI) de la persona solicitante. En ese caso, primero pedí el DNI; recién después, si corresponde, consultá la herramienta.\n- Cuando la persona solicitante todavía no formuló ninguna pregunta relacionada con una solicitud existente.\n\nINFORMACIÓN QUE NECESITÁS ANTES DE EJECUTARLA:\n- El número de documento (DNI) de la persona solicitante, proporcionado explícitamente por ella en la conversación. Nunca lo inventes ni lo asumas.\n\nCÓMO INTERPRETAR LOS RESULTADOS:\n- Si la herramienta devuelve una o más filas asociadas al DNI consultado, informá a la persona solicitante la información encontrada (fecha, variedad y estado) de forma clara, usando solamente lo que la herramienta devolvió.\n- Si la herramienta no devuelve ninguna fila para ese DNI, informá que no se encontró ninguna solicitud registrada a su nombre; no asumas que existe una solicitud igualmente.\n- Si el resultado es ambiguo (por ejemplo, múltiples filas con datos contradictorios, o datos incompletos), comunicá la ambigüedad a la persona solicitante en lugar de elegir arbitrariamente una respuesta, y sugerí que el caso sea revisado por Recursos Humanos si no podés resolverlo con claridad.\n- Si la herramienta devuelve un error o no puede ejecutarse correctamente, no inventes un resultado: informá que no fue posible verificar la información en este momento y que el caso debe ser derivado a Recursos Humanos.\n\nEsta herramienta es de solo lectura en este checkpoint: se utiliza para consultar información existente, no para crear ni modificar solicitudes.",
         "operation": "getAll",
         "documentId": {
           "__rl": true,
           "mode": "id",
           "value": "YOUR_SPREADSHEET_ID"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "YOUR_SHEET_NAME"
         }
       },
       "id": "5a1fed99-c73d-4b1f-9514-c9aa7c43386e",
@@ -92,7 +97,7 @@
       "parameters": {
         "sendTo": "YOUR_OBSERVABILITY_EMAIL",
         "subject": "=Reporte de ejecucion - Agente Tortas - {{ $now.format('yyyy-MM-dd HH:mm') }}",
-        "message": "=<h3>Reporte de observabilidad - Agente de Tortas (Checkpoint 1)</h3><p><b>Fecha y hora:</b> {{ $now.format('yyyy-MM-dd HH:mm:ss') }}</p><p><b>Mensaje original recibido:</b><br>{{ $('When chat message received').item.json.chatInput }}</p><p><b>Respuesta final del AI Agent:</b><br>{{ $json.output }}</p><p><b>ID de ejecucion:</b> {{ $execution.id }}</p><p><b>Estado de la ejecucion:</b> {{ $execution.customData ? 'ver detalle en Executions' : 'success' }}</p><p style=\\\"color:#888;font-size:12px\\\">Nota academica: n8n no expone el razonamiento privado (chain of thought) del modelo como dato reutilizable. Este reporte solo incluye input, output y metadatos realmente accesibles desde la ejecucion.</p>",
+        "message": "=<h3>Reporte de observabilidad - Agente de Tortas (Checkpoint 1)</h3><p><b>Fecha y hora:</b> {{ $now.format('yyyy-MM-dd HH:mm:ss') }}</p><p><b>Mensaje original recibido:</b><br>{{ $('When chat message received').item.json.chatInput }}</p><p><b>Respuesta final del AI Agent:</b><br>{{ $json.output }}</p><p><b>ID de ejecucion:</b> {{ $execution.id }}</p><p><b>Estado de la ejecucion:</b> {{ $execution.customData ? 'ver detalle en Executions' : 'success' }}</p><p style=\"color:#888;font-size:12px\">Nota academica: n8n no expone el razonamiento privado (chain of thought) del modelo como dato reutilizable. Este reporte solo incluye input, output y metadatos realmente accesibles desde la ejecucion.</p>",
         "options": {}
       },
       "id": "d3a231da-be09-4a5e-a7ea-13f741af98c5",
@@ -168,49 +173,5 @@
   },
   "nodeGroups": [],
   "pinData": {},
-  "versionId": "d52a4a84-970d-4b69-93b7-69e30b2c2e1f",
-  "activeVersionId": null,
-  "versionCounter": 4,
-  "triggerCount": 0,
-  "shared": [
-    {
-      "updatedAt": "2026-09-06T18:24:52.176Z",
-      "createdAt": "2026-09-06T18:24:52.176Z",
-      "role": "workflow:owner",
-      "workflowId": "ia9V3Hiko1IBKJPp",
-      "projectId": "gYQBeEAQqfOq2pL1",
-      "project": {
-        "updatedAt": "2026-09-06T17:37:32.920Z",
-        "createdAt": "2026-09-06T16:31:42.087Z",
-        "id": "gYQBeEAQqfOq2pL1",
-        "name": "Milagros Daiana Seja <milagros.seja@gmail.com>",
-        "type": "personal",
-        "icon": null,
-        "description": null,
-        "creatorId": "776a57be-5a51-447d-adce-6041b00c9c6a"
-      }
-    }
-  ],
-  "tags": [],
-  "parentFolder": null,
-  "activeVersion": null,
-  "scopes": [
-    "execution:reveal",
-    "workflow:create",
-    "workflow:delete",
-    "workflow:disableRedaction",
-    "workflow:enableRedaction",
-    "workflow:execute",
-    "workflow:execute-chat",
-    "workflow:export",
-    "workflow:list",
-    "workflow:move",
-    "workflow:publish",
-    "workflow:read",
-    "workflow:share",
-    "workflow:unpublish",
-    "workflow:unshare",
-    "workflow:update"
-  ],
-  "checksum": "9210b379a187d708d87abec14bb7eb573523e263c8d1120f9ca7c0738b74a2ec"
+  "tags": []
 }
